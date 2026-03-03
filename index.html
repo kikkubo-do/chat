@@ -3,20 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>Advanced Chat Application</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto mt-10">
-        <div class="bg-white p-5 rounded shadow-md">
-            <h1 class="text-2xl font-bold mb-4">Chat Application</h1>
-            <div class="chat-box border h-64 overflow-y-scroll p-4 mb-4 bg-gray-50">
-                <!-- Chat Messages will appear here -->
-            </div>
-            <textarea class="border w-full p-2" rows="2" placeholder="Type your message..."></textarea>
-            <input type="file" class="my-2" />
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Send</button>
+<body class="flex flex-col h-screen">
+    <header class="p-4 bg-white shadow">
+        <h1 class="text-2xl font-bold">Chat Application</h1>
+    </header>
+    <main class="flex-grow p-4">
+        <div id="chat-container" class="overflow-auto h-5/6 bg-gray-100 p-4 rounded-lg shadow-md">
+            <!-- Chat bubbles will be dynamically inserted here -->
         </div>
-    </div>
+        <div class="mt-4">
+            <input id="file-upload" type="file" class="border p-2 rounded" />
+            <input type="text" id="message-input" class="border p-2 rounded w-full" placeholder="Type a message..." />
+            <button id="send-button" class="bg-blue-500 text-white p-2 rounded">Send</button>
+        </div>
+    </main>
+    <footer class="p-4 bg-white shadow">
+        <p>&copy; 2026 Chat App</p>
+    </footer>
+    
+    <script>
+        const sendButton = document.getElementById('send-button');
+        const messageInput = document.getElementById('message-input');
+        const chatContainer = document.getElementById('chat-container');
+        const fileUpload = document.getElementById('file-upload');
+
+        sendButton.addEventListener('click', () => {
+            const messageText = messageInput.value;
+            const file = fileUpload.files[0];
+            const messageBubble = document.createElement('div');
+            messageBubble.className = 'bg-white rounded p-2 my-2 shadow';
+            messageBubble.innerText = messageText;
+
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+                messageBubble.innerHTML += `<div>File: <a href="${fileURL}" target="_blank">${file.name}</a></div>`;
+            }
+
+            chatContainer.appendChild(messageBubble);
+            messageInput.value = '';
+            fileUpload.value = ''; // Clear file input
+        });
+
+        // Message deletion & confirmation modal (to be extended)
+        chatContainer.addEventListener('click', (event) => {
+            if (event.target.className.includes('bg-white')) {
+                const confirmation = confirm('Do you want to delete this message?');
+                if (confirmation) {
+                    event.target.remove();
+                }
+            }
+        });
+    </script>
 </body>
 </html>
