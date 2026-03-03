@@ -3,49 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Chat Application</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        #chatWindow { border: 1px solid #ccc; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
-        .message { margin: 5px 0; }
-        button { margin-top: 10px; }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Advanced Chat Application</title>
 </head>
-<body>
-    <h1>Online Chat Application</h1>
-    <div id="chatWindow"></div>
-    <input type="text" id="messageInput" placeholder="Type your message here..."><br>
-    <input type="file" id="fileUpload"><br>
-    <button id="sendMessage">Send Message</button>
-    <button id="clearMessages">Clear All Messages</button>
-
-    <script>
-        const chatWindow = document.getElementById('chatWindow');
-        const messageInput = document.getElementById('messageInput');
-        const sendMessage = document.getElementById('sendMessage');
-        const clearMessages = document.getElementById('clearMessages');
-
-        sendMessage.addEventListener('click', () => {
-            const message = messageInput.value;
-            const fileUpload = document.getElementById('fileUpload').files[0];
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message');
-
-            if (message) {
-                messageDiv.textContent = message;
-            }
-            if (fileUpload) {
-                messageDiv.textContent += ` (File: ${fileUpload.name})`;
-            }
-
-            chatWindow.appendChild(messageDiv);
-            messageInput.value = '';
-            document.getElementById('fileUpload').value = '';
-        });
-
-        clearMessages.addEventListener('click', () => {
-            chatWindow.innerHTML = '';
-        });
-    </script>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10">
+        <div class="bg-white p-5 rounded shadow-md">
+            <h1 class="text-2xl font-bold mb-4">Chat Application</h1>
+            <div class="chat-box border h-64 overflow-y-scroll p-4 mb-4 bg-gray-50">
+                <!-- Chat Messages will appear here -->
+            </div>
+            <textarea class="border w-full p-2" rows="2" placeholder="Type your message..."></textarea>
+            <input type="file" class="my-2" />
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Send</button>
+        </div>
+    </div>
 </body>
 </html>
