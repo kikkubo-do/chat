@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Chat Application</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #chatWindow { border: 1px solid #ccc; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
+        .message { margin: 5px 0; }
+        button { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Online Chat Application</h1>
+    <div id="chatWindow"></div>
+    <input type="text" id="messageInput" placeholder="Type your message here..."><br>
+    <input type="file" id="fileUpload"><br>
+    <button id="sendMessage">Send Message</button>
+    <button id="clearMessages">Clear All Messages</button>
+
+    <script>
+        const chatWindow = document.getElementById('chatWindow');
+        const messageInput = document.getElementById('messageInput');
+        const sendMessage = document.getElementById('sendMessage');
+        const clearMessages = document.getElementById('clearMessages');
+
+        sendMessage.addEventListener('click', () => {
+            const message = messageInput.value;
+            const fileUpload = document.getElementById('fileUpload').files[0];
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+
+            if (message) {
+                messageDiv.textContent = message;
+            }
+            if (fileUpload) {
+                messageDiv.textContent += ` (File: ${fileUpload.name})`;
+            }
+
+            chatWindow.appendChild(messageDiv);
+            messageInput.value = '';
+            document.getElementById('fileUpload').value = '';
+        });
+
+        clearMessages.addEventListener('click', () => {
+            chatWindow.innerHTML = '';
+        });
+    </script>
+</body>
+</html>
